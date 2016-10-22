@@ -6,7 +6,7 @@ public class ATest {
 
     @Test
     public void testName() throws Exception {
-        assertTrue(true);
+        assertTrue(false);
 
     }
 }
