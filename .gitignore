@@ -21,3 +21,5 @@ settings.gradle
 src/test/resources/
 src/main/resources/
 
+build
+
