@@ -70,4 +70,12 @@ public class Product {
     public void setProductName(Optional<String> productName) {
         this.productName = productName;
     }
+
+    public Optional<BigDecimal> getTaxPrice() {
+        return taxPrice;
+    }
+
+    public void setTaxPrice(Optional<BigDecimal> taxPrice) {
+        this.taxPrice = taxPrice;
+    }
 }
