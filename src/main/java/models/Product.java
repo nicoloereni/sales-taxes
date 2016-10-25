@@ -1,7 +1,7 @@
 package models;
 
-import models.tax.type.enums.ImportTaxType;
-import models.tax.type.enums.TaxType;
+import models.tax.type.ImportTaxType;
+import models.tax.type.TaxType;
 
 import java.math.BigDecimal;
 import java.util.Optional;

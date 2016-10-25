@@ -1,12 +1,11 @@
 package models;
 
-import models.tax.type.enums.ImportTaxType;
+import models.tax.type.ImportTaxType;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static java.util.Optional.*;
-import static models.tax.type.enums.TaxType.EXEMPT;
+import static models.tax.type.TaxType.EXEMPT;
 
 public class Food extends Product{
 

@@ -1,4 +1,4 @@
-package models.tax.type.enums;
+package models.tax.type;
 
 import java.math.BigDecimal;
 

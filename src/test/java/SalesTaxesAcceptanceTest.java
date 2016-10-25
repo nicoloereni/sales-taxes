@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static models.tax.type.enums.ImportTaxType.IMPORTED;
-import static models.tax.type.enums.ImportTaxType.NOT_IMPORTED;
+import static models.tax.type.ImportTaxType.IMPORTED;
+import static models.tax.type.ImportTaxType.NOT_IMPORTED;
 
 public class SalesTaxesAcceptanceTest {
 

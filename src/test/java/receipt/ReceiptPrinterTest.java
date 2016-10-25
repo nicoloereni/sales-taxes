@@ -1,8 +1,7 @@
 package receipt;
 
 import models.Book;
-import models.Product;
-import models.tax.type.enums.ImportTaxType;
+import models.tax.type.ImportTaxType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
