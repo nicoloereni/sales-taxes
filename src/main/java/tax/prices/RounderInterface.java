@@ -1,4 +1,4 @@
-package calculators;
+package tax.prices;
 
 import java.math.BigDecimal;
 

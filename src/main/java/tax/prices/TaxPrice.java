@@ -1,17 +1,14 @@
-package calculators;
-
-import models.Product;
+package tax.prices;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 
-public class TaxPriceCalculator implements TaxPriceCalculatorInterface {
+public class TaxPrice implements TaxPriceInterface {
 
     private RounderInterface rounderInterface;
 
-    public TaxPriceCalculator(RounderInterface rounderInterface) {
+    public TaxPrice(RounderInterface rounderInterface) {
         this.rounderInterface = rounderInterface;
     }
 
@@ -31,12 +28,4 @@ public class TaxPriceCalculator implements TaxPriceCalculatorInterface {
         return Optional.of(calculateTaxPrice(price.get(), taxPercentage));
     }
 
-    @Override
-    public Consumer<Product> populateProductPrices() {
-        return p -> {
-            BigDecimal taxPercentage = p.getTaxType().getValue().add(p.getImportTaxType().getValue());
-            p.setPriceWithTaxes(calculatePriceWithTaxes(p.getPrice(), taxPercentage));
-            p.setTaxPrice(calculateTaxPrice(p.getPrice(), taxPercentage));
-        };
-    }
 }

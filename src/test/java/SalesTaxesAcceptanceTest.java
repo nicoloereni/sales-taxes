@@ -1,9 +1,10 @@
-import calculators.Rounder;
-import calculators.TaxPriceCalculator;
+import tax.prices.ProductTaxPrice;
+import tax.prices.Rounder;
+import tax.prices.TaxPrice;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;
-import store.ReceiptPrinter;
+import receipt.ReceiptPrinter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,15 +14,17 @@ import static junit.framework.TestCase.assertEquals;
 import static models.tax.type.enums.ImportTaxType.IMPORTED;
 import static models.tax.type.enums.ImportTaxType.NOT_IMPORTED;
 
-public class ReceiptPrinterTest {
+public class SalesTaxesAcceptanceTest {
 
     private ReceiptPrinter receiptPrinter;
+    private ProductTaxPrice productTaxPrice;
 
     @Before
     public void setUp() throws Exception {
 
         Rounder rounder = new Rounder();
-        receiptPrinter = new ReceiptPrinter(rounder, new TaxPriceCalculator(rounder));
+        receiptPrinter = new ReceiptPrinter(rounder);
+        productTaxPrice = new ProductTaxPrice(new TaxPrice(new Rounder()));
 
     }
 
@@ -46,7 +49,7 @@ public class ReceiptPrinterTest {
         products.add(new TaxedProduct("music CD", new BigDecimal(14.99), NOT_IMPORTED));
         products.add(new Food("chocolate bar", new BigDecimal(0.85), NOT_IMPORTED));
 
-        String result = receiptPrinter.printReceipt(products);
+        String result = receiptPrinter.printReceipt(productTaxPrice.populateProductsPriceAndTax(products));
 
         assertEquals(
                 "1 book at 12.49\n" +
@@ -76,7 +79,7 @@ public class ReceiptPrinterTest {
         products.add(new Food("chocolate bar", new BigDecimal(10.00), IMPORTED));
         products.add(new TaxedProduct("imported bottle of perfume", new BigDecimal(47.50), IMPORTED));
 
-        String result = receiptPrinter.printReceipt(products);
+        String result = receiptPrinter.printReceipt(productTaxPrice.populateProductsPriceAndTax(products));
 
         assertEquals(
                 "1 chocolate bar at 10.50\n" +
@@ -112,7 +115,7 @@ public class ReceiptPrinterTest {
         products.add(new MedicalProduct("packet of headache pills", new BigDecimal(9.75), NOT_IMPORTED));
         products.add(new Food("box of imported chocolates", new BigDecimal(11.25), IMPORTED));
 
-        String result = receiptPrinter.printReceipt(products);
+        String result = receiptPrinter.printReceipt(productTaxPrice.populateProductsPriceAndTax(products));
 
         assertEquals(
                 "1 imported bottle of perfume at 32.19\n" +

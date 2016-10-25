@@ -1,4 +1,4 @@
-package calculators;
+package tax.prices;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TaxPriceCalculatorTest {
 
-    private TaxPriceCalculator taxPriceCalculator;
+    private TaxPrice taxPriceCalculator;
 
     @Mock
     Rounder rounder;
@@ -27,7 +27,7 @@ public class TaxPriceCalculatorTest {
     public void setUp() throws Exception {
 
         delta = 0.001;
-        taxPriceCalculator = new TaxPriceCalculator(rounder);
+        taxPriceCalculator = new TaxPrice(rounder);
         when(rounder.roundPrice(any())).thenAnswer(invocation -> invocation.getArguments()[0]);
         when(rounder.roundTax(any())).thenAnswer(invocation -> invocation.getArguments()[0]);
 
