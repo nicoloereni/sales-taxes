@@ -1,3 +1,5 @@
+import calculators.Rounder;
+import calculators.TaxPriceCalculator;
 import models.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,8 @@ public class ReceiptPrinterTest {
     @Before
     public void setUp() throws Exception {
 
-        receiptPrinter = new ReceiptPrinter();
+        Rounder rounder = new Rounder();
+        receiptPrinter = new ReceiptPrinter(rounder, new TaxPriceCalculator(rounder));
 
     }
 
@@ -40,7 +43,7 @@ public class ReceiptPrinterTest {
 
         List<Product> products = new ArrayList<>();
         products.add(new Book("book", new BigDecimal(12.49), NOT_IMPORTED));
-        products.add(new StandardProduct("music CD", new BigDecimal(14.99), NOT_IMPORTED));
+        products.add(new TaxedProduct("music CD", new BigDecimal(14.99), NOT_IMPORTED));
         products.add(new Food("chocolate bar", new BigDecimal(0.85), NOT_IMPORTED));
 
         String result = receiptPrinter.printReceipt(products);
@@ -71,7 +74,7 @@ public class ReceiptPrinterTest {
 
         List<Product> products = new ArrayList<>();
         products.add(new Food("chocolate bar", new BigDecimal(10.00), IMPORTED));
-        products.add(new StandardProduct("imported bottle of perfume", new BigDecimal(47.50), IMPORTED));
+        products.add(new TaxedProduct("imported bottle of perfume", new BigDecimal(47.50), IMPORTED));
 
         String result = receiptPrinter.printReceipt(products);
 
@@ -104,8 +107,8 @@ public class ReceiptPrinterTest {
     public void printReceiptInputThreeReturnProperResponse() throws Exception {
 
         List<Product> products = new ArrayList<>();
-        products.add(new StandardProduct("imported bottle of perfume", new BigDecimal(27.99), IMPORTED));
-        products.add(new StandardProduct("bottle of perfume", new BigDecimal(18.99), NOT_IMPORTED));
+        products.add(new TaxedProduct("imported bottle of perfume", new BigDecimal(27.99), IMPORTED));
+        products.add(new TaxedProduct("bottle of perfume", new BigDecimal(18.99), NOT_IMPORTED));
         products.add(new MedicalProduct("packet of headache pills", new BigDecimal(9.75), NOT_IMPORTED));
         products.add(new Food("box of imported chocolates", new BigDecimal(11.25), IMPORTED));
 

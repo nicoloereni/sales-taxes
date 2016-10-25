@@ -1,17 +1,26 @@
 package store;
 
+import calculators.RounderInterface;
+import calculators.TaxPriceCalculatorInterface;
 import models.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static calculators.Rounder.roundPrice;
-
 public class ReceiptPrinter {
 
     private String receipt = "";
+    private RounderInterface rounder;
+    private TaxPriceCalculatorInterface taxPriceCalculatorInterface;
+
+    public ReceiptPrinter(RounderInterface rounder, TaxPriceCalculatorInterface taxPriceCalculatorInterface) {
+        this.rounder = rounder;
+        this.taxPriceCalculatorInterface = taxPriceCalculatorInterface;
+    }
 
     public String printReceipt(List<Product> products) {
+
+        products.forEach(taxPriceCalculatorInterface.populateProductPrices());
 
         products.stream().forEach(this::formatReceiptProduct);
 
@@ -31,7 +40,7 @@ public class ReceiptPrinter {
 
     String formatReceiptTotalPriceWithTaxes(Double totalPricesWithTax) {
 
-        String result = "Total: " + roundPrice(new BigDecimal(totalPricesWithTax));
+        String result = "Total: " + rounder.roundPrice(new BigDecimal(totalPricesWithTax));
 
         receipt += result;
 
@@ -40,7 +49,7 @@ public class ReceiptPrinter {
 
     String formatReceiptTotalTaxes(Double totalTaxes) {
 
-        String result = "Sales taxes: " + roundPrice(new BigDecimal(totalTaxes)) + "\n";
+        String result = "Sales taxes: " + rounder.roundPrice(new BigDecimal(totalTaxes)) + "\n";
 
         receipt += result;
 

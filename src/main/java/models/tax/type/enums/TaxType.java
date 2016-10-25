@@ -13,7 +13,7 @@ public enum TaxType {
         this.value = value;
     }
 
-    public BigDecimal geValue() {
+    public BigDecimal getValue() {
         return this.value;
     }
 }

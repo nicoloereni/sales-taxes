@@ -6,7 +6,7 @@ import models.tax.type.enums.TaxType;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static calculators.TaxPriceCalculator.*;
+import static java.util.Optional.of;
 
 public class Product {
 
@@ -21,12 +21,8 @@ public class Product {
         this.price = price;
         this.importTaxType = importTaxType;
         this.taxType = taxType;
-        this.priceWithTaxes =
-                calculatePriceWithTaxes(
-                        this.price,
-                        this.importTaxType.getValue().add(this.taxType.geValue())
-                );
-        this.taxPrice = calculateTaxPrice(price, this.importTaxType.getValue().add(this.taxType.geValue()));
+        this.priceWithTaxes = of(BigDecimal.ZERO);
+        this.taxPrice = of(BigDecimal.ZERO);
     }
 
     private Optional<BigDecimal> price;
