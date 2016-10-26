@@ -8,7 +8,6 @@ import java.util.List;
 
 public class ReceiptPrinter {
 
-    private String receipt = "";
     private RounderInterface rounder;
 
     public ReceiptPrinter(RounderInterface rounder) {
@@ -17,17 +16,13 @@ public class ReceiptPrinter {
 
     public String printReceipt(List<Product> products) {
 
-        products.stream().forEach(this::formatReceiptProduct);
-
-        System.out.println(receipt);
-
+        String productsReceipt = products.stream().map(this::formatReceiptProduct).reduce("", (a,b) -> a + b);
         String totalTaxesReceipt = formatReceiptTotalTaxes(products.stream().mapToDouble(p -> p.getTaxPrice().get().doubleValue()).sum());
-
-        System.out.println(totalTaxesReceipt);
-
         String totalPriceWithTaxesReceipt = formatReceiptTotalPriceWithTaxes(products.stream().mapToDouble(p -> p.getPriceWithTaxes().get().doubleValue()).sum());
 
-        System.out.println(totalPriceWithTaxesReceipt);
+        String receipt = productsReceipt + totalTaxesReceipt + totalPriceWithTaxesReceipt;
+
+        System.out.println(receipt);
 
         return receipt;
 
@@ -35,28 +30,17 @@ public class ReceiptPrinter {
 
     String formatReceiptTotalPriceWithTaxes(Double totalPricesWithTax) {
 
-        String result = "Total: " + rounder.roundPrice(new BigDecimal(totalPricesWithTax));
-
-        receipt += result;
-
-        return result;
+        return "Total: " + rounder.roundPrice(new BigDecimal(totalPricesWithTax));
     }
 
     String formatReceiptTotalTaxes(Double totalTaxes) {
 
-        String result = "Sales taxes: " + rounder.roundPrice(new BigDecimal(totalTaxes)) + "\n";
-
-        receipt += result;
-
-        return result;
+        return "Sales taxes: " + rounder.roundPrice(new BigDecimal(totalTaxes)) + "\n";
 
     }
 
     String formatReceiptProduct(Product p) {
-        String result = "1 " + p.getProductName().get() + " at " + p.getPriceWithTaxes().get() + "\n";
 
-        receipt += result;
-
-        return result;
+        return "1 " + p.getProductName().get() + " at " + p.getPriceWithTaxes().get() + "\n";
     }
 }
